@@ -10,6 +10,7 @@ export var in_game = true
 
 onready var joystick = $VirtualJoystick
 onready var jump_bool = false
+onready var to_send_arr = []
 onready var just_jumped = false
 onready var move = Vector3.ZERO
 onready var scene_name = get_tree().get_current_scene().get_name()
@@ -58,8 +59,13 @@ func _process(delta):
 	if in_game:
 		var to_send = ""
 		to_send += "d:"
-		to_send += str(global_transform.origin)
-		to_send += str(id)
+		to_send += "["
+		to_send += var2str(global_transform.origin)
+		to_send += "~"
+		to_send += var2str(move)
+		to_send += "~"
+		to_send += id
+		to_send += "]"
 		#print(to_send)
 		_client.get_peer(1).put_packet(to_send.to_utf8())
 		#_client.get_peer(1).put_packet("Test packet".to_utf8())

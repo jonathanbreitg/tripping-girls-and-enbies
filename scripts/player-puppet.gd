@@ -15,16 +15,6 @@ var id = "-5"
 # Called when the node enters the scene tree for the first time.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
-func _process(delta):
-	move.x = dir.x
-	move.z = dir.y
-	move.x = -move.x
-	move.z = -move.z
-	move_and_slide(move*SPEED,Vector3.UP)
-	if is_on_floor():
-		move.y = 0
-	if just_jumped:
-		move.y = JUMP
-		just_jumped = false
-	if !is_on_floor():
-		move.y -= GRAVITY
+#func _process(delta):
+	#move_and_slide(move*SPEED,Vector3.UP)
+	

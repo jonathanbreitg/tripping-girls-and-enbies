@@ -12,6 +12,9 @@ var model
 var got_pos
 var i = 0
 var pos_arr = []
+var move_arr = []
+var got_move
+var act_move
 var got_data
 var act_pos = Vector3.ZERO
 var got_id
@@ -26,24 +29,22 @@ func _ready():
 #	pass
 func _process_data(data):
 	print("the data:",data)
-	got_data = data.split(")")
+	got_data = data.split("~")
 	got_pos = got_data[0]
 	got_pos = got_pos.substr(1)
-	got_id = got_data[1]
-	pos_arr = got_pos.split(",")
-	act_pos.x = float(pos_arr[0])
-	act_pos.y = float(pos_arr[1])
-	act_pos.z = float(pos_arr[2])
+	got_move = got_data[1]
+	act_move = str2var(got_move)
+	print(act_move)
+	got_id = got_data[2]
+	act_pos = str2var(got_pos)
 	print("len:",len(PLAYERS),"num:",num_of_players)
-	print_tree()
 	if (len(PLAYERS) < num_of_players && PLAYERS.has(got_id) == false):
 		get_node(str(i)).set_name(got_id)
 		i += 1
 		PLAYERS[got_id] = get_node(got_id)
-	print_tree()
 	print("set act pos of:",got_id,"as :",act_pos)
 	get_node(got_id).global_transform.origin = act_pos
-	
+	get_node(got_id).get_node("KinematicBody").move = act_move
 	
 
 func start_game():
