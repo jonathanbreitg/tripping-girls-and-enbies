@@ -35,7 +35,8 @@ func _ready():
 	var err = _client.connect_to_url(websocket_url)
 	if err != OK:
 		print("Unable to connect")
-		set_process(false)
+		get_tree().change_scene("res://scenes/main-menu.tscn")
+		#set_process(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -46,7 +47,6 @@ func _process(delta):
 	move.x = -move.x
 	move.z = -move.z
 	move_and_slide(move*SPEED,Vector3.UP)
-	print(move)
 	if is_on_floor():
 		move.y = 0
 	if just_jumped:
@@ -60,7 +60,7 @@ func _process(delta):
 		to_send += "d:"
 		to_send += str(global_transform.origin)
 		to_send += str(id)
-		print(to_send)
+		#print(to_send)
 		_client.get_peer(1).put_packet(to_send.to_utf8())
 		#_client.get_peer(1).put_packet("Test packet".to_utf8())
 
@@ -77,6 +77,7 @@ func _closed(was_clean=false):
 	# was_clean will tell you if the disconnection was correctly notified
 	# by the remote peer before closing the socket.
 	print("Closed, clean: ", was_clean)
+	get_tree().change_scene("res://scenes/main-menu.tscn")
 	set_process(false)
 
 func _connected(proto = ""):
@@ -94,16 +95,20 @@ func _on_data():
 	# using the MultiplayerAPI.
 	var data = _client.get_peer(1).get_packet().get_string_from_utf8()
 	data = data.replace('"',"")
-	print("Got data from server: ", data)
+	#print("Got data from server: ", data)
 	if !in_game:
 		if (data.begins_with("STARTING GAME")):
 			get_parent().get_parent().get_node("Label").text = "STARTING GAME..."
 			print("starting epic game")
 			if int(id) == -1:
 				id =data.trim_prefix("STARTING GAME")
+				print("our id is:",id)
 				Globals.id = id
 			
-			get_tree().change_scene("res://scenes/map.tscn")
+			#get_tree().change_scene("res://scenes/map.tscn")
+			get_parent().get_parent().start_game()
+			in_game = true
+			return
 		elif (data.begins_with("game is already running...")):
 			get_parent().get_parent().get_node("Label").text = "game is already running..."
 			if int(id) == -1:
@@ -124,4 +129,5 @@ func _on_data():
 	if in_game:
 		#other players move logic...
 		print('no logic yet')
+		get_parent().get_parent()._process_data(data)
 		

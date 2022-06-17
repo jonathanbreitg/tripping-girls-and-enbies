@@ -9,9 +9,9 @@ script = ExtResource( 2 )
 [node name="CSGBox" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.614245, 0 )
 use_collision = true
-width = 173.884
+width = 150.0
 height = 0.343123
 depth = 165.475
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65648, 0.909725, -1.62194 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
