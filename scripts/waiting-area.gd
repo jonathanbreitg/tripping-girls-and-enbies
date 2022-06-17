@@ -6,7 +6,7 @@ extends Spatial
 # var b = "text"
 var id = Globals.id
 var num_of_players = Globals.player_num
-export var width = 15
+export var width = 50
 var player_base = preload("res://scenes/player-puppet.tscn")
 var model
 var got_pos
@@ -28,21 +28,21 @@ func _ready():
 #func _process(delta):
 #	pass
 func _process_data(data):
-	print("the data:",data)
+	#print("the data:",data)
 	got_data = data.split("~")
 	got_pos = got_data[0]
 	got_pos = got_pos.substr(1)
 	got_move = got_data[1]
 	act_move = str2var(got_move)
-	print(act_move)
+	#print(act_move)
 	got_id = got_data[2]
 	act_pos = str2var(got_pos)
-	print("len:",len(PLAYERS),"num:",num_of_players)
+	#print("len:",len(PLAYERS),"num:",num_of_players)
 	if (len(PLAYERS) < num_of_players && PLAYERS.has(got_id) == false):
 		get_node(str(i)).set_name(got_id)
 		i += 1
 		PLAYERS[got_id] = get_node(got_id)
-	print("set act pos of:",got_id,"as :",act_pos)
+	#print("set act pos of:",got_id,"as :",act_pos)
 	get_node(got_id).global_transform.origin = act_pos
 	get_node(got_id).get_node("KinematicBody").move = act_move
 	

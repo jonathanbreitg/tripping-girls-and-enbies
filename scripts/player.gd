@@ -11,9 +11,11 @@ export var in_game = true
 onready var joystick = $VirtualJoystick
 onready var jump_bool = false
 onready var to_send_arr = []
+onready var old_y = 0
 onready var just_jumped = false
 onready var move = Vector3.ZERO
 onready var scene_name = get_tree().get_current_scene().get_name()
+export(NodePath) onready var cameraRig = get_node(cameraRig) as Spatial
 var id = Globals.id
 var _client = WebSocketClient.new()
 # Called when the node enters the scene tree for the first time.
@@ -42,11 +44,18 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _process(delta):
+	
+	
+	
+	
 	var dir = joystick.get_value()
 	move.x = dir.x
 	move.z = dir.y
 	move.x = -move.x
 	move.z = -move.z
+	old_y = move.y
+	move = move.rotated(Vector3.UP, cameraRig.rotation.y).normalized()
+	move.y = old_y
 	move_and_slide(move*SPEED,Vector3.UP)
 	if is_on_floor():
 		move.y = 0
@@ -134,6 +143,16 @@ func _on_data():
 			get_parent().get_parent().get_node("Label").text = data
 	if in_game:
 		#other players move logic...
-		print('no logic yet')
+		#print('no logic yet')
 		get_parent().get_parent()._process_data(data)
 		
+
+func _input(event):
+   # Mouse in viewport coordinates.
+   if event is InputEventMouseButton:
+	   print("Mouse Click/Unclick at: ", event.position)
+   elif event is InputEventMouseMotion:
+	   print("Mouse Motion at: ", event.position)
+
+   # Print the size of the viewport.
+  # print("Viewport Resolution is: ", get_viewport_rect().size)
