@@ -17,7 +17,7 @@ onready var move = Vector3.ZERO
 onready var scene_name = get_tree().get_current_scene().get_name()
 export(NodePath) onready var cameraRig = get_node(cameraRig) as Spatial
 
-
+onready var ids = []
 var id = Globals.id
 var skin = Globals.skin
 
@@ -107,7 +107,9 @@ func _connected(proto = ""):
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
 	if in_game == false:
+		_client.get_peer(1).put_packet(("wi".to_utf8()))
 		_client.get_peer(1).put_packet("j:".to_utf8())
+		_client.get_peer(1).put_packet(("ss:"+get_name_of_mat(skin)).to_utf8())
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
@@ -116,18 +118,34 @@ func _on_data():
 	var data = _client.get_peer(1).get_packet().get_string_from_utf8()
 	data = data.replace('"',"")
 	#print("Got data from server: ", data)
+	print(data)
+	if (data.begins_with("id:")):
+		print("got other id")
+		if (data.substr(3) != id && ids.has(data.substr(3)) == false):
+			ids.append(data.substr(3))
+			print(ids)
+			get_parent().get_parent().ids = ids
+	
+	if (data.begins_with("uid")):
+		data = data.substr(3)
+		id = data
+		Globals.id = id
+		print("our id is:",id)
+	
 	if !in_game:
 		if (data.begins_with("STARTING GAME")):
 			get_parent().get_parent().get_node("Label").text = "STARTING GAME..."
 			print("starting epic game")
 			if int(id) == -1:
 				id =data.trim_prefix("STARTING GAME")
+				
 				print("our id is:",id)
 				Globals.id = id
 			
 			#get_tree().change_scene("res://scenes/map.tscn")
 			get_parent().get_parent().start_game()
 			in_game = true
+			_client.get_peer(1).put_packet("skins:".to_utf8())
 			return
 		elif (data.begins_with("game is already running...")):
 			get_parent().get_parent().get_node("Label").text = "game is already running..."
@@ -152,12 +170,8 @@ func _on_data():
 		get_parent().get_parent()._process_data(data)
 		
 
-func _input(event):
-   # Mouse in viewport coordinates.
-   if event is InputEventMouseButton:
-	   print("Mouse Click/Unclick at: ", event.position)
-   elif event is InputEventMouseMotion:
-	   print("Mouse Motion at: ", event.position)
-
    # Print the size of the viewport.
   # print("Viewport Resolution is: ", get_viewport_rect().size)
+
+func get_name_of_mat(mat: Material):
+	return mat.resource_path.get_file().trim_suffix('.material')
