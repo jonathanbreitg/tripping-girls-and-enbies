@@ -78,7 +78,6 @@ shape = SubResource( 5 )
 
 [node name="Camera" type="Camera" parent="KinematicBody/CameraRig/SpringArm"]
 transform = Transform( -1, -5.68434e-14, -8.74228e-08, -3.90434e-08, 0.894732, 0.446604, 7.82199e-08, 0.446604, -0.894732, 0, 24.7101, -19.305 )
-current = true
 fov = 90.0
 near = 0.1
 far = 8192.0

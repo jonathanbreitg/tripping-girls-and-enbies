@@ -43,7 +43,7 @@ func _process_data(data):
 		i += 1
 		PLAYERS[got_id] = get_node(got_id)
 	#print("set act pos of:",got_id,"as :",act_pos)
-	get_node(got_id).global_transform.origin = act_pos
+	get_node(got_id).global_transform.origin = lerp(get_node(got_id).global_transform.origin,act_pos,0.8)
 	get_node(got_id).get_node("KinematicBody").move = act_move
 	
 
@@ -61,4 +61,3 @@ func start_game():
 		changing_trans.x += (width / (num_of_players+1))
 		i += 1
 	i = 0
-	
