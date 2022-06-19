@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fall-guys.png-0d57613fcffe44760380f6c4c04615aa.stex"
+path="res://.import/yellow-skin.png-75f663043923d190560988a1f29c15db.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/fall-guys.png"
-dest_files=[ "res://.import/fall-guys.png-0d57613fcffe44760380f6c4c04615aa.stex" ]
+source_file="res://images/yellow-skin.png"
+dest_files=[ "res://.import/yellow-skin.png-75f663043923d190560988a1f29c15db.stex" ]
 
 [params]
 

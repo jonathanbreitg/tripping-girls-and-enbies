@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rainbow.png-177f7daa45334e71ea75c1266f58a9a7.stex"
+path="res://.import/red-skin.png-66b1fc9909c3a630fa69dbf04def926a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/rainbow.png"
-dest_files=[ "res://.import/rainbow.png-177f7daa45334e71ea75c1266f58a9a7.stex" ]
+source_file="res://images/red-skin.png"
+dest_files=[ "res://.import/red-skin.png-66b1fc9909c3a630fa69dbf04def926a.stex" ]
 
 [params]
 

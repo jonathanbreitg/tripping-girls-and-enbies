@@ -16,10 +16,15 @@ onready var just_jumped = false
 onready var move = Vector3.ZERO
 onready var scene_name = get_tree().get_current_scene().get_name()
 export(NodePath) onready var cameraRig = get_node(cameraRig) as Spatial
+
+
 var id = Globals.id
+var skin = Globals.skin
+
 var _client = WebSocketClient.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_node("MeshInstance").set_surface_material(0,skin)
 	print(scene_name)
 	if scene_name == "waiting-area":
 		in_game = false

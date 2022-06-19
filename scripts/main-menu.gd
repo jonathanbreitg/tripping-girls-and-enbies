@@ -29,3 +29,29 @@ func _on_Button2_pressed():
 func _on_TextureButton_pressed():
 	home.visible = true
 	skins.visible = false
+
+
+func _on_TextureButton_rainbow_pressed():
+	Globals.skin = preload("res://skins-materials/rainbow.material")
+
+func _on_TextureButton_red_pressed():
+	Globals.skin = preload("res://skins-materials/red.material")
+
+func _on_TextureButton_orange_pressed():
+	Globals.skin = preload("res://skins-materials/orange.material")
+	
+func _on_TextureButton_yellow_pressed():
+	Globals.skin = preload("res://skins-materials/yellow.material")
+	
+func _on_TextureButton_purple_pressed():
+	Globals.skin = preload("res://skins-materials/purple.material")
+
+func _on_TextureButton_cyan_pressed():
+	Globals.skin = preload("res://skins-materials/cyan.material")
+
+func _on_TextureButton_floral_pressed():
+	Globals.skin = preload("res://skins-materials/floral.material")
+
+
+func _on_TextureButton_purple_striped_pressed():
+	Globals.skin = preload("res://skins-materials/purple-striped.material")
